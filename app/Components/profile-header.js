@@ -8,13 +8,14 @@ export default function ProfileHeader() {
     <div className="space-y-4 mb-8">
       
         <div className="flex justify-center  gap-8 items-start">
-          <Avatar className="w-46 h-46 border">
-            <AvatarImage
-              src="/img1.png"
-              alt="Profile picture"
-            />
-            <AvatarFallback>JD</AvatarFallback>
-          </Avatar>
+      <Avatar className="w-44 h-44 border overflow-hidden rounded-full">
+  <AvatarImage
+    src="/img1.png"
+    alt="Profile picture"
+    className="w-full h-full object-cover"
+  />
+  <AvatarFallback>JD</AvatarFallback>
+</Avatar>
           
        <div className="space-y-3">
         <div className="flex gap-2">
