@@ -86,12 +86,12 @@ export default function DeleteAccountModal({ onClose }) {
             />
           </div>
 
-          {/* Warning message */}
+          
           <p className="text-[#b81616] text-xs">
             *All your data will be deleted permanently from our server. This action is irreversible.
           </p>
 
-          {/* Action buttons */}
+          
           <div className="flex gap-3 pt-2">
             <button
               type="button"
