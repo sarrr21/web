@@ -4,8 +4,6 @@ import { useState, useRef, useEffect } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Input } from "@/components/ui/input"
-import { Send, X, Plus, Code, Image, Edit3  } from "lucide-react"
 import { AvatarGroup } from "../Components/avator-group"
 import MessagePlaceholder from "../Components/palceholde"
 
@@ -349,8 +347,7 @@ export default function ChatPage() {
           </>
           
         ) : (
-          
-         <MessagePlaceholder />
+           <MessagePlaceholder />
         )}
       </div>
     </div>

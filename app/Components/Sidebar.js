@@ -98,14 +98,14 @@ export function Sidebar() {
           )}
           asChild
         >
-          <Link href="/my-pulse">
+          <Link href="/pulse">
             <Activity className="h-5 w-5" />
             My Pulse
           </Link>
         </Button>
       </nav>
 
-      {/* User Profile Section */}
+     
       <div className="border-t p-4">
         <div className="flex items-center gap-2">
           <Image
@@ -130,7 +130,7 @@ export function Sidebar() {
               </Button>
       </div>
 
-      {/* Dropdown Menu */}
+     
       {isOpen && (
         <div
           className="absolute bottom-full right-0 mb-2 w-48 bg-white border rounded-lg shadow-lg"

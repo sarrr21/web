@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import PeopleSuggestions from '../Components/people'
 
 // Sample data for feed posts
 const posts = [
@@ -37,11 +38,11 @@ const posts = [
 
 export default function FeedPage() {
   return (
-    <div className="w-full mx-auto p-4">
+    <div className="w-full mx-auto py-8 px-16">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-        <h1 className="text-2xl font-bold">Feed</h1>
+        <h1 className="text-2xl font-bold">My Pulse</h1>
         </div>
         
         
@@ -69,33 +70,18 @@ export default function FeedPage() {
       
 
       {/* Location Sel ector */}
-      <div className=" flex items-center justify-center gap-2 mb-6">
-        <MapPin className="h-4 w-4 text-muted-foreground" />
-        <span className="text-muted-foreground text-xl font-semibold">Happening in</span>
-        <Button variant="ghost" className="font-semibold text-xl">
-          Seattle
-          <svg
-            className="ml-2 h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </Button>
+      <div className="flex gap-2 mb-6">
+       
+        <p className=" text-lg font-semibold text-[#0C1024]">Posts from people you follow</p>
+        
       </div>
 
       {/* Feed Posts */}
      
-        
-      <div className="space-y-6 max-w-2xl mx-auto">
+        <div className='flex gap-6'>
+      <div className=" space-y-6 max-w-2xl mx-auto">
   {posts.map((post) => (
-    <div key={post.id} className="rounded-lg border bg-card text-card-foreground shadow-sm">
+    <div key={post.id} className=" border bg-card text-card-foreground shadow-sm rounded-3xl">
       {/* Post Header */}
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center gap-3">
@@ -107,7 +93,10 @@ export default function FeedPage() {
             className="rounded-full"
           />
           <div>
+            <div className='flex gap-2'> 
             <h3 className="font-semibold">{post.author}</h3>
+            <h3 className='text-[#838B98]'>Following</h3>
+            </div>
             <p className="text-sm text-muted-foreground">{post.timeAgo}</p>
           </div>
         </div>
@@ -164,6 +153,10 @@ export default function FeedPage() {
       </div>
     </div>
   ))}
+</div>
+<div className=' w-1/3'>
+<PeopleSuggestions />
+</div>
 </div>
 
     </div>
