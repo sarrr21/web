@@ -84,7 +84,7 @@ export function Sidebar() {
           )}
           asChild
         >
-          <Link href="/add-story">
+          <Link href="/story">
             <PlusCircle className="h-5 w-5" />
             Add Your Story
           </Link>

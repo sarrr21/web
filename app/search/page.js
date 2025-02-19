@@ -82,7 +82,7 @@ export default function FeedPage() {
           <div className="w-16 h-16 mx-auto ">
             <img src="./inbox.png" />
           </div>
-          <h2 className="text-2xl font-semibold text-gray-800">No posts yet</h2>
+          <h2 className="text-md font-semibold text-gray-800">No posts yet</h2>
           <p className="text-gray-500 text-sm max-w-md mx-auto">
             There are no posts on "My Pulse" yet. <br /> follow users to see there posts
           </p>
