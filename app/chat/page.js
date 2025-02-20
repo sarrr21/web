@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { AvatarGroup } from "../Components/avator-group"
 import MessagePlaceholder from "../Components/palceholde"
+import { Bell, Search } from "lucide-react"
 
 
 const statusColors = {
@@ -132,226 +133,214 @@ export default function ChatPage() {
   }
 
   return (
-    
-    <div className="flex h-screen ">
-      
-      <div className="w-80 bg-white border-r flex flex-col h-screen fixed left-0 top-0">
-        <div className="py-6 px-8">
-          <h1 className="font-semibold text-lg">My Inbox</h1>
+    <div>
+      <div className="flex items-center justify-between pt-8 pb-4 px-16 mb-6">
+        <div>
+        <p className="text-2xl font-bold">Messages</p>
         </div>
-        <ScrollArea className="flex-grow">
-          {contacts.map((contact) => (
-            <div
-              key={contact.id}
-              className={`py-4 px-8 hover:bg-gray-50 cursor-pointer border-b ${activeChat && activeChat.id === contact.id ? "bg-gray-100" : ""}`}
-              onClick={() => handleChatClick(contact)}
-            >
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  {contact.type === "group" ? (
+        
+        
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <input
+              type="search"
+              placeholder="Search"
+              className="w-[400px] pl-9 rounded-full border border-input bg-background px-3 py-2"
+            />
+          </div>
+          <div className='flex gap-4'> 
+          <Button size="icon" variant="ghost" className="relative">
+            <Bell className="h-5 w-5" />
+            <span className="absolute -right-1 -top-0.5 h-4 w-4 rounded-full bg-red-500 text-[10px] font-medium text-white flex items-center justify-center">
+              1
+            </span>
+          </Button>
+          <Button size="icon" variant="ghost" className="relative">
+            <img src="./msg.png" className="h-8 w-8" />
+            
+          </Button>
+          </div>
+        </div>
+      
+   
+    <div className="flex h-[832px] w-[995px] mx-auto rounded-3xl   border overflow-hidden">
+    <div className="w-80 bg-white border-r flex flex-col h-full">
+      <div className="py-6 px-8">
+        <h1 className="font-semibold text-lg">My Inbox</h1>
+      </div>
+      <ScrollArea className="flex-grow">
+        {contacts.map((contact) => (
+          <div
+            key={contact.id}
+            className={`py-4 px-8 hover:bg-gray-50 cursor-pointer border-b ${activeChat && activeChat.id === contact.id ? "bg-gray-100" : ""}`}
+            onClick={() => handleChatClick(contact)}
+          >
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                {contact.type === "group" ? (
+                  <Avatar>
+                    <AvatarImage src={contact.avatar} />
+                    <AvatarFallback>GC</AvatarFallback>
+                  </Avatar>
+                ) : (
+                  <div className="relative">
                     <Avatar>
                       <AvatarImage src={contact.avatar} />
-                      <AvatarFallback>GC</AvatarFallback>
+                      <AvatarFallback>
+                        {contact.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </AvatarFallback>
                     </Avatar>
-                  ) : (
-                    <div className="relative">
-                      <Avatar>
-                        <AvatarImage src={contact.avatar} />
-                        <AvatarFallback>
-                          {contact.name
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div
-                        className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${statusColors[contact.status]}`}
-                      />
-                    </div>
-                  )}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-medium">{contact.name}</div>
-                  <div className="text-sm text-gray-500 truncate">{contact.lastMessage}</div>
-                </div>
+                    <div
+                      className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${statusColors[contact.status]}`}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-medium">{contact.name}</div>
+                <div className="text-sm text-gray-500 truncate">{contact.lastMessage}</div>
               </div>
             </div>
-          ))}
-        </ScrollArea>
-        
-        <div className=" p-2.5 border-t mt-auto w-full flex items-center justify-center gap-2 bg-white text-gray-600">
-      <img src="./pen.png" className="h-5 w-5" /> 
-      New Message
-    </div>
-      
-      </div>
+          </div>
+        ))}
+      </ScrollArea>
 
-     
-      <div className="flex-1 flex flex-col ml-80">
-        {activeChat ? (
-          <>
-            
-            <div className="py-3 px-6 border-b bg-white fixed top-0 left-80 right-0 z-10">
-              {activeChat.type === "group" ? (
-               
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="relative">
-                      <Avatar>
-                        <AvatarImage src={activeChat.avatar} />
-                        <AvatarFallback>GC</AvatarFallback>
-                      </Avatar>
-                    </div>
-                    <div>
-                      <div className="font-medium">{activeChat.name}</div>
-                     
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                  <div variant="ghost" size="sm" className="flex gap-1">
-                      <img src="./addd.png" className="h-4 w-4 mt-1" />
-                     <span className="text-gray-500">Invite</span> 
-                    </div>
-                  <div className="flex items-center gap-2 mt-1">
-                        <AvatarGroup>
-                          {activeChat.members.map((member) => (
-                            <Avatar key={member.id} className="h-6 w-6">
-                              <AvatarImage src={member.avatar} />
-                              <AvatarFallback>
-                                {member.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
-                              </AvatarFallback>
-                            </Avatar>
-                          ))}
-                        </AvatarGroup>
-                      </div>
-                    
-                    <Button variant="ghost" size="icon" >
-                      <img src="./Menu.png" className="h-4 w-4" />
-                    </Button>
+      <div className="p-2.5 border-t mt-auto w-full flex items-center justify-center gap-2 bg-white text-gray-600">
+        <img src="./pen.png" className="h-5 w-5" alt="New Message" />
+        New Message
+      </div>
+    </div>
+
+    <div className="flex-1 flex flex-col">
+      {activeChat ? (
+        <>
+          <div className="py-3 px-6 border-b bg-white sticky top-0 z-10">
+            {activeChat.type === "group" ? (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Avatar>
+                    <AvatarImage src={activeChat.avatar} />
+                    <AvatarFallback>GC</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <div className="font-medium">{activeChat.name}</div>
                   </div>
                 </div>
-              ) : (
-                
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-3">
-                    <div className="relative">
-                      <Avatar>
-                        <AvatarImage src={activeChat.avatar} />
-                        <AvatarFallback>
-                          {activeChat.name
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div
-                        className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${statusColors[activeChat.status]}`}
-                      />
-                    </div>
-                    <div>
-                      <div className="font-medium ">{activeChat.name}</div>
-                      
-                    </div>
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1">
+                    <img src="./addd.png" className="h-4 w-4 mt-1" alt="Invite" />
+                    <span className="text-gray-500">Invite</span>
                   </div>
-                  <Button variant="ghost" size="icon" >
-                    <img src="./Menu.png" className="h-4 w-4" />
+                  <div className="flex items-center gap-2 mt-1">
+                    <AvatarGroup>
+                      {activeChat.members.map((member) => (
+                        <Avatar key={member.id} className="h-6 w-6">
+                          <AvatarImage src={member.avatar} />
+                          <AvatarFallback>
+                            {member.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")}
+                          </AvatarFallback>
+                        </Avatar>
+                      ))}
+                    </AvatarGroup>
+                  </div>
+                  <Button variant="ghost" size="icon">
+                    <img src="./Menu.png" className="h-4 w-4" alt="Menu" />
                   </Button>
                 </div>
-              )}
+              </div>
+            ) : (
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <Avatar>
+                      <AvatarImage src={activeChat.avatar} />
+                      <AvatarFallback>
+                        {activeChat.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div
+                      className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${statusColors[activeChat.status]}`}
+                    />
+                  </div>
+                  <div>
+                    <div className="font-medium">{activeChat.name}</div>
+                  </div>
+                </div>
+                <Button variant="ghost" size="icon">
+                  <img src="./Menu.png" className="h-4 w-4" alt="Menu" />
+                </Button>
+              </div>
+            )}
+          </div>
+
+          <ScrollArea className="flex-1 py-6 px-12 pt-24 pb-20">
+            <div className="space-y-6">
+              <div className="flex items-center my-6">
+                <div className="flex-grow border-t border-gray-300 border-2"></div>
+                <span className="text-sm text-gray-500">18 January 2025</span>
+                <div className="flex-grow border-t border-gray-300 border-2"></div>
+              </div>
+
+              {(messages[activeChat.id] || []).map((message) => (
+                <div
+                  key={message.id}
+                  className={`flex gap-3 ${message.sender === "AI Assistant" ? "justify-end" : ""}`}
+                >
+                  <div className={`flex-1 ${message.sender === "AI Assistant" ? "text-right" : ""}`}>
+                    <div
+                      className={`rounded-lg p-3 w-fit max-w-[60%] whitespace-pre-wrap ${
+                        message.sender === "AI Assistant"
+                          ? "bg-[#4C68D5] text-white ml-auto"
+                          : "bg-[#F1F4F9] text-[#27364B]"
+                      }`}
+                    >
+                      {message.text}
+                      <div className="text-sm text-end">{message.timestamp}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
+          </ScrollArea>
+
+          <div className="flex p-2">
+            <div className="mt-8">
+              <Avatar>
+                <AvatarImage src={activeChat.avatar} />
+                <AvatarFallback></AvatarFallback>
+              </Avatar>
             </div>
 
-            
-            <ScrollArea className="flex-1 py-6 px-12 pt-24 pb-20">
-              <div className="space-y-6">
-                <div className="flex items-center my-6">
-        <div className="flex-grow border-t border-gray-300 border-2"></div>
-        <span className=" text-sm text-gray-500">18 January 2025</span>
-        <div className="flex-grow border-t border-gray-300 border-2"></div>
-      </div>
-                
-                {(messages[activeChat.id] || []).map((message) => (
-                  <div
-                    key={message.id}
-                    className={`flex gap-3 ${message.sender === "AI Assistant" ? "justify-end" : ""}`}
-                  >
-                    
-                    <div className={`flex-1 ${message.sender === "AI Assistant" ? "text-right" : ""}`}>
-                      <div className="flex items-center gap-2 mb-1">
-                        
-                        
-                      </div>
-                      <div
-                        className={`rounded-lg p-3 w-fit max-w-[60%] whitespace-pre-wrap ${
-                          message.sender === "AI Assistant"
-                            ? "bg-[#4C68D5] text-white ml-auto"
-                            : "bg-[#F1F4F9] text-[#27364B]"
-                        }`}
-                      >
-                        {message.text}
-                        <div className="text-sm text-end ">{message.timestamp}</div>
-                      </div>
-                    </div>
-                   
-                  </div>
-                ))}
-                <div ref={messagesEndRef} />
-              </div>
-            </ScrollArea>
+            <div className="flex items-center border-[#ABB0B9] rounded-full border px-2 py-2 m-6 w-full">
+              <label className="cursor-pointer flex items-center">
+                <img src="./Paper.png" className="w-5 h-5" alt="Attach file" />
+                <input type="file" accept="image/*" className="hidden" />
+              </label>
 
-           <div className="flex  p-2">
+              <input placeholder="Type a message..." className="flex-1 px-4 py-2 outline-none text-sm" />
 
-          
-                    <div className=" mt-8 ">
-                      <Avatar>
-                        <AvatarImage src={activeChat.avatar} className=""/>
-                        <AvatarFallback>
-                          
-                        </AvatarFallback>
-                      </Avatar>
-                     
-                    </div>
-                    
-
-            <div className="flex items-center  border-[#ABB0B9] rounded-full border  px-2 py-2 m-6 w-full  ">
-     
-      <label className="cursor-pointer flex items-center">
-        <img src="./Paper.png" className=" w-5 h-5" />
-        <input
-          type="file"
-          accept="image/*"
-          className="hidden"
-          
-        />
-      </label>
-
-      
-      <input
-       
-        placeholder="Type a message..."
-        className="flex-1 px-4 py-2 outline-none text-sm "
-      />
-
-      
-      <button
-       
-        className="text-blue-500 p-2 rounded-full hover:bg-blue-100"
-      >
-        <img src="./Plain.png" className="w-5 h-5" />
-      </button>
-      </div>
+              <button className="text-blue-500 p-2 rounded-full hover:bg-blue-100">
+                <img src="./Plain.png" className="w-5 h-5" alt="Send" />
+              </button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <MessagePlaceholder />
+      )}
     </div>
-    
-          </>
-          
-        ) : (
-           <MessagePlaceholder />
-        )}
-      </div>
-    </div>
-    
+  </div>
+  </div>
   )
 }
 
