@@ -1,94 +1,37 @@
-'use client'
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-import { useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
-
-export default function ForgotPassword() {
-  const [email, setEmail] = useState('')
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    
-    console.log('Password reset requested for:', email)
-  }
-
+export default function RecoverPassword() {
   return (
-    <div className="min-h-screen relative bg-gray-100">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/image5.png"
-          alt="Seattle Skyline"
-          fill
-          className="object-cover"
-          priority
-        />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 min-h-screen">
-        {/* Back Button */}
-        <Link 
-          href="/"
-          className="absolute top-4 left-4 text-white flex items-center gap-2 hover:opacity-80 transition-opacity"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back</span>
-        </Link>
-
-        {/* Logo */}
-        <div className="w-full pt-8 flex justify-center">
-          <div className="w-32 h-32 relative">
-            <Image
-              src="/sea.png"
-              alt="Seattle Pulse Logo"
-              width={128}
-              height={128}
-              className="object-contain"
-            />
+    <div className="min-h-screen bg-cover bg-center"
+    style={{ backgroundImage: "url('/image5.png')" }}>
+      <div className='flex justify-center'>
+          <img src="./sea.png" className='w-36 h-36'/>
+        </div>
+    <Card className="w-full max-w-lg h-[402px] mx-auto p-8 rounded-3xl ">
+      <CardHeader className="space-y-6">
+        <CardTitle className="font-semibold text-xl">Recover Password</CardTitle>
+      </CardHeader>
+      <CardContent >
+        <div className="">
+          <p className="text-sm text-muted-foreground mb-4">Enter your email below to recover your password</p>
+          <p className="mb-1">Email</p>
+          <Input type="email" placeholder="example@email.com" className="w-full py-3 text-black " />
+        </div>
+        <Button className="w-full bg-gray-400 hover:bg-gray-500 rounded-full mt-6 ">Resend</Button>
+       
+        <div className="text-center text-sm ">
+        <p className="p-0 text-center  text-muted-foreground mt-2">Resend email after 90s</p>
+        <div className="mt-4">
+          <span >Remembered your password? </span>
+          <a href="/login" className="text-primary hover:underline">
+            Login
+          </a>
           </div>
         </div>
-
-       
-        <div className="max-w-sm mx-auto mt-8 p-8 bg-white rounded-lg shadow-lg">
-          <h1 className="text-2xl font-semibold text-center mb-2">
-            Reset password
-          </h1>
-          
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <input
-                type="new"
-                placeholder="New Password"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-            <div>
-              <input
-                type="confirm"
-                placeholder="Confirm Password"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full py-3 px-4 bg-[#0a0f29] text-white rounded-md hover:bg-[#1a1f39] transition-colors"
-            >
-             Reset Password
-            </button>
-          </form>
-        </div>
-      </div>
+      </CardContent>
+    </Card>
     </div>
   )
 }

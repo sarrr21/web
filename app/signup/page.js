@@ -1,104 +1,161 @@
-'use client'
-import React, { useState } from "react";
+"use client"
 
-import Image from 'next/image'
-import Link from 'next/link'
+import { useState } from "react"
+import { EyeIcon, EyeOffIcon } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 
-export default function Signup() {
-    const [isChecked, setIsChecked] = useState(false);
+export default function SignUpForm() {
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    agreeToTerms: false,
+  })
+  const [errors, setErrors] = useState({})
 
-    const handleCheckboxChange = () => {
-      setIsChecked(!isChecked);
-    };
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // Add your form validation and submission logic here
+    setErrors({ email: "This email is already used" })
+  }
+
   return (
-    <div className=" min-h-screen w-full flex items-center justify-center bg-cover bg-center" 
-         style={{ backgroundImage: "url('/image5.png')" }}>
-      <div className="w-full max-w-md p-4">
-        <div className='flex justify-center'>
+    <div className="bg-cover bg-center min-h-screen"
+    style={{ backgroundImage: "url('/image5.png')" }}>
+       <div className='flex justify-center'>
           <img src="./sea.png" className='w-36 h-36'/>
         </div>
-        <div className="backdrop-blur-sm bg-white/30 mx-14 rounded-lg px-6 py-12">
-         
-          <button className="w-full bg-white text-gray-600  py-2 px-4 rounded mb-4 flex items-center justify-center gap-2 hover:bg-gray-50">
-            <Image src="/google.png" alt="Google" width={20} height={20} />
-            Log in with Google
-          </button>
+    <div className="w-full max-w-xl mx-auto p-8 bg-white  rounded-3xl">
+      <div className="flex items-center mb-6">
+        <button className="mr-2">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+          </svg>
+        </button>
+        <h1 className="text-xl font-semibold">Sign Up – We're excited to have you!</h1>
+      </div>
 
-          <button className="w-full bg-white text-gray-600  py-2 px-4 rounded mb-6 flex items-center justify-center gap-2 hover:bg-gray-50">
-            <Image src="/mail.png" alt="Email" width={20} height={20} />
-            Log in with Email
-          </button>
-
-         
-          <div className="flex items-center mb-6">
-            <div className="flex-1 border-t border-2 border-gray-700"></div>
-            <span className="px-4 text-sm text-gray-500 font-medium">OR</span>
-            <div className="flex-1 border-t border-2 border-gray-700"></div>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <span className="text-sm mb-2">First Name</span>
+            <Input name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} />
           </div>
+          <div>
+            <span  className="text-sm mb-2" >Last Name</span>
+            <Input name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} />
+          </div>
+        </div>
 
-       
-          <form className="space-y-4">
-            <div>
-              <input
-                type="name"
-                placeholder="Name"
-                className="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white/80"
-              />
-            </div>
-            <div>
-              <input
-                type="email"
-                placeholder="Email"
-                className="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white/80"
-              />
-            </div>
-            <div>
-              <input
-                type="username"
-                placeholder="Username"
-                className="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white/80"
-              />
-            </div>
-            <div>
-              <input
-                type="password"
-                placeholder="Password"
-                className="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white/80"
-              />
-            </div>
-       
-        <div className="flex items-start mb-4">
-          <input
-            id="terms-checkbox"
-            type="checkbox"
-            checked={isChecked}
-            onChange={handleCheckboxChange}
-            className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+        <div>
+          <span  className="text-sm mb-2">Username</span>
+          <Input name="username" placeholder="Username" value={formData.username} onChange={handleChange} />
+        </div>
+
+        <div>
+          <span  className="text-sm mb-2">Email</span>
+          <Input
+            name="email"
+            type="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            className={errors.email ? "border-red-500" : ""}
           />
-          <label
-            htmlFor="terms-checkbox"
-            className="ml-2 text-sm text-gray-700"
+          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+        </div>
+
+        <div className="relative">
+          <span  className="text-sm mb-2">Create Password</span>
+          <Input
+            name="password"
+            type={showPassword ? "text" : "password"}
+            placeholder="Create Password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          <button
+            type="button"
+            className="absolute right-3 top-1/2 mt-3 -translate-y-1/2"
+            onClick={() => setShowPassword(!showPassword)}
           >
-            I agree to the Terms and Privacy Policy
+            {showPassword ? (
+              <EyeOffIcon className="h-4 w-4 text-gray-500" />
+            ) : (
+              <EyeIcon className="h-4 w-4 text-gray-500" />
+            )}
+          </button>
+        </div>
+
+        <div className="relative">
+          <span  className="text-sm mb-2">Confirm Password</span>
+          <Input
+            name="confirmPassword"
+            type={showConfirmPassword ? "text" : "password"}
+            placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            className=""
+          />
+          <button
+            type="button"
+            className="absolute right-3  top-1/2 mt-3 -translate-y-1/2"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            {showConfirmPassword ? (
+              <EyeOffIcon className="h-4 w-4 text-gray-500" />
+            ) : (
+              <EyeIcon className="h-4 w-4 text-gray-500" />
+            )}
+          </button>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="terms"
+            checked={formData.agreeToTerms}
+            onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, agreeToTerms: checked }))}
+          />
+          <label htmlFor="terms" className="text-sm">
+            I agree to the{" "}
+            <a href="#" className="text-blue-600">
+              Terms
+            </a>{" "}
+            and{" "}
+            <a href="#" className="text-blue-600">
+              Privacy Policy
+            </a>
+            .
           </label>
         </div>
-            <button
-              type="submit"
-              className="w-full bg-gray-900 text-white font-semibold py-2 px-4 rounded  transition-colors"
-            >
-              Sign Up
-            </button>
-          </form>
 
-        
-          <p className="mt-6 text-center text-gray-600">
-             have an account?{' '}
-            <Link href="/signup" className="text-gray-900  font-semibold">
-              Log in
-            </Link>
-          </p>
-        </div>
-      </div>
+        <Button className="w-full bg-black text-white hover:bg-black/90 rounded-full" type="submit ">
+          Create Account
+        </Button>
+
+        <p className="text-center text-sm">
+          Already Have an Account?{" "}
+          <a href="#" className="text-blue-600">
+            Login
+          </a>
+        </p>
+      </form>
+    </div>
     </div>
   )
 }
